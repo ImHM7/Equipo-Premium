@@ -1,0 +1,732 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ECO5 — GH Services</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Barlow:wght@400;500;600;700;900&family=Barlow+Condensed:wght@400;700;900&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --black: #0a0a0a;
+    --dark: #111318;
+    --card: #161b22;
+    --card2: #1c2230;
+    --accent: #00e5ff;
+    --accent2: #ff3c3c;
+    --gold: #f0b429;
+    --text: #e8eaf0;
+    --muted: #7a8394;
+    --border: rgba(0,229,255,0.15);
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background-color: var(--black);
+    color: var(--text);
+    font-family: 'Barlow', sans-serif;
+    line-height: 1.5;
+    overflow-x: hidden;
+  }
+
+  /* ── HERO ─────────────────────────────── */
+  .hero {
+    position: relative;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    padding: 60px 24px 80px;
+    overflow: hidden;
+    background: radial-gradient(ellipse 80% 60% at 50% 0%, rgba(0,229,255,0.07) 0%, transparent 70%),
+                var(--black);
+  }
+
+  .hero::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image:
+      linear-gradient(rgba(0,229,255,0.04) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(0,229,255,0.04) 1px, transparent 1px);
+    background-size: 40px 40px;
+    mask-image: radial-gradient(ellipse 80% 80% at 50% 50%, black 30%, transparent 80%);
+  }
+
+  /* ── LOGO SVG ─────────────────────────── */
+  .logo-wrap {
+    position: relative;
+    width: 200px;
+    height: 200px;
+    margin-bottom: 32px;
+    animation: fadeUp 0.7s ease both 0.1s;
+  }
+
+  .logo-wrap svg {
+    width: 100%;
+    height: 100%;
+    filter: drop-shadow(0 0 24px rgba(0,229,255,0.35));
+  }
+
+  @keyframes spin-slow {
+    from { transform: rotate(0deg); }
+    to   { transform: rotate(360deg); }
+  }
+  @keyframes spin-rev {
+    from { transform: rotate(0deg); }
+    to   { transform: rotate(-360deg); }
+  }
+
+  .ring-outer { animation: spin-slow 18s linear infinite; transform-origin: center; }
+  .ring-inner { animation: spin-rev  12s linear infinite; transform-origin: center; }
+
+  /* brand text below logo */
+  .logo-brand {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(38px, 10vw, 64px);
+    letter-spacing: 10px;
+    color: var(--text);
+    margin-bottom: 4px;
+    animation: fadeUp 0.7s ease both 0.25s;
+  }
+
+  .logo-sub {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 700;
+    font-size: clamp(10px, 2.5vw, 13px);
+    letter-spacing: 5px;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 36px;
+    animation: fadeUp 0.7s ease both 0.35s;
+  }
+
+  .hero-line {
+    width: 60px;
+    height: 2px;
+    background: var(--accent);
+    margin: 0 auto 28px;
+    box-shadow: 0 0 12px var(--accent);
+    animation: fadeUp 0.7s ease both 0.4s;
+  }
+
+  .hero-product {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(56px, 18vw, 130px);
+    letter-spacing: 4px;
+    line-height: 0.9;
+    color: var(--text);
+    animation: fadeUp 0.7s ease both 0.45s;
+  }
+
+  .hero-product span { color: var(--accent); display: block; }
+
+  .hero-model {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 700;
+    font-size: clamp(13px, 3vw, 20px);
+    letter-spacing: 8px;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-top: 12px;
+    animation: fadeUp 0.7s ease both 0.5s;
+  }
+
+  .hero-tagline {
+    font-size: clamp(14px, 3vw, 17px);
+    font-weight: 500;
+    color: var(--muted);
+    max-width: 480px;
+    line-height: 1.6;
+    margin-top: 20px;
+    animation: fadeUp 0.7s ease both 0.55s;
+  }
+
+  .hero-badges {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    justify-content: center;
+    margin-top: 32px;
+    animation: fadeUp 0.7s ease both 0.65s;
+  }
+
+  .badge {
+    background: rgba(0,229,255,0.08);
+    border: 1px solid var(--border);
+    border-radius: 2px;
+    padding: 8px 16px;
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 700;
+    font-size: 12px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--accent);
+  }
+
+  .badge.red {
+    background: rgba(255,60,60,0.08);
+    border-color: rgba(255,60,60,0.2);
+    color: var(--accent2);
+  }
+
+  /* ── SECTIONS ─────────────────────────── */
+  section {
+    padding: 64px 24px;
+    max-width: 900px;
+    margin: 0 auto;
+  }
+
+  .section-label {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 700;
+    font-size: 11px;
+    letter-spacing: 6px;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 12px;
+  }
+
+  .section-title {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(36px, 8vw, 64px);
+    letter-spacing: 2px;
+    line-height: 1;
+    color: var(--text);
+    margin-bottom: 40px;
+  }
+
+  .divider {
+    width: 100%;
+    height: 1px;
+    background: linear-gradient(90deg, var(--accent), transparent);
+    margin-bottom: 40px;
+    opacity: 0.3;
+  }
+
+  /* ── VENTAJAS ─────────────────────────── */
+  .advantages { background: var(--dark); padding: 64px 24px; }
+  .advantages-inner { max-width: 900px; margin: 0 auto; }
+
+  .adv-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 16px;
+    margin-top: 40px;
+  }
+
+  .adv-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    padding: 28px 24px;
+    position: relative;
+    overflow: hidden;
+    transition: border-color 0.3s, transform 0.3s;
+  }
+
+  .adv-card:hover { border-color: rgba(0,229,255,0.4); transform: translateY(-2px); }
+  .adv-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 2px;
+    background: var(--accent);
+    box-shadow: 0 0 8px var(--accent);
+  }
+  .adv-card.red::before { background: var(--accent2); box-shadow: 0 0 8px var(--accent2); }
+  .adv-card.gold::before { background: var(--gold); box-shadow: 0 0 8px var(--gold); }
+
+  .adv-icon { font-size: 28px; margin-bottom: 16px; display: block; }
+  .adv-title {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 900;
+    font-size: 18px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    color: var(--text);
+    margin-bottom: 10px;
+  }
+  .adv-title .highlight { color: var(--accent); }
+  .adv-card.red .adv-title .highlight { color: var(--accent2); }
+  .adv-card.gold .adv-title .highlight { color: var(--gold); }
+  .adv-desc { font-size: 14px; color: var(--muted); line-height: 1.6; }
+
+  /* ── FEATURES ────────────────────────── */
+  .features-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 12px;
+  }
+
+  .feat-item {
+    background: var(--card);
+    border: 1px solid rgba(255,255,255,0.06);
+    border-radius: 4px;
+    padding: 20px;
+    display: flex;
+    gap: 14px;
+    align-items: flex-start;
+  }
+
+  .feat-dot {
+    width: 6px; height: 6px;
+    border-radius: 50%;
+    background: var(--accent);
+    flex-shrink: 0;
+    margin-top: 6px;
+    box-shadow: 0 0 6px var(--accent);
+  }
+
+  .feat-text { font-size: 14px; color: var(--text); font-weight: 500; }
+  .feat-sub  { font-size: 12px; color: var(--muted); margin-top: 4px; }
+
+  /* ── SPECS ───────────────────────────── */
+  .specs-bg { background: var(--dark); padding: 64px 24px; }
+  .specs-inner { max-width: 900px; margin: 0 auto; }
+
+  .specs-table { width: 100%; border-collapse: collapse; margin-top: 8px; }
+  .specs-table tr { border-bottom: 1px solid rgba(255,255,255,0.05); transition: background 0.2s; }
+  .specs-table tr:hover { background: rgba(0,229,255,0.03); }
+  .specs-table td { padding: 14px 8px; font-size: 14px; }
+  .specs-table td:first-child {
+    color: var(--muted);
+    font-weight: 600;
+    width: 45%;
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 13px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+  }
+  .specs-table td:last-child { color: var(--text); font-weight: 500; }
+
+  .specs-group {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 900;
+    font-size: 13px;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    color: var(--accent);
+    padding: 28px 8px 10px;
+    display: block;
+  }
+
+  /* ── SENSORS ─────────────────────────── */
+  .sensors-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 12px;
+    margin-top: 32px;
+  }
+
+  .sensor-card {
+    background: var(--card2);
+    border: 1px solid rgba(255,255,255,0.06);
+    border-radius: 4px;
+    padding: 24px 20px;
+    text-align: center;
+    transition: border-color 0.3s;
+  }
+  .sensor-card:hover { border-color: rgba(0,229,255,0.3); }
+  .sensor-icon { font-size: 32px; margin-bottom: 12px; }
+  .sensor-name {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 700;
+    font-size: 15px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    color: var(--text);
+    margin-bottom: 6px;
+  }
+  .sensor-desc { font-size: 12px; color: var(--muted); }
+
+  /* ── USE CASES ───────────────────────── */
+  .use-cases {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 16px;
+    margin-top: 32px;
+  }
+
+  .use-card {
+    background: var(--card);
+    border-left: 3px solid var(--accent);
+    padding: 20px;
+    border-radius: 0 4px 4px 0;
+  }
+  .use-card:nth-child(2) { border-color: var(--gold); }
+  .use-card:nth-child(3) { border-color: var(--accent2); }
+  .use-card:nth-child(4) { border-color: #00e676; }
+
+  .use-title {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 900;
+    font-size: 16px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    color: var(--text);
+    margin-bottom: 8px;
+  }
+  .use-desc { font-size: 13px; color: var(--muted); line-height: 1.5; }
+
+  /* ── FOOTER ──────────────────────────── */
+  .footer {
+    background: var(--black);
+    border-top: 1px solid var(--border);
+    padding: 60px 24px;
+    text-align: center;
+  }
+
+  .footer-logo {
+    width: 80px;
+    height: 80px;
+    margin: 0 auto 16px;
+    filter: drop-shadow(0 0 12px rgba(0,229,255,0.3));
+  }
+
+  .footer-brand {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 36px;
+    letter-spacing: 8px;
+    color: var(--text);
+    margin-bottom: 4px;
+  }
+  .footer-brand span { color: var(--accent); }
+
+  .footer-sub {
+    font-size: 11px;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 24px;
+  }
+
+  .footer-note { font-size: 12px; color: rgba(122,131,148,0.4); margin-top: 32px; }
+
+  /* ── ANIMATIONS ──────────────────────── */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(24px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  @media (max-width: 480px) {
+    section, .advantages, .specs-bg { padding: 48px 20px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- HERO -->
+<div class="hero">
+
+  <!-- LOGO recreado en cian -->
+  <div class="logo-wrap">
+    <svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <radialGradient id="bgGrad" cx="50%" cy="50%" r="50%">
+          <stop offset="0%"   stop-color="#0a0a0a"/>
+          <stop offset="100%" stop-color="#0d1117"/>
+        </radialGradient>
+        <!-- outer ring gradient -->
+        <linearGradient id="ringGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+          <stop offset="0%"   stop-color="#00e5ff"/>
+          <stop offset="40%"  stop-color="#00b8d9"/>
+          <stop offset="100%" stop-color="#005f73"/>
+        </linearGradient>
+        <!-- inner ring gradient -->
+        <linearGradient id="ringGrad2" x1="100%" y1="0%" x2="0%" y2="100%">
+          <stop offset="0%"   stop-color="#00e5ff" stop-opacity="0.9"/>
+          <stop offset="100%" stop-color="#003d4d"  stop-opacity="0.6"/>
+        </linearGradient>
+        <filter id="glow">
+          <feGaussianBlur stdDeviation="3" result="coloredBlur"/>
+          <feMerge><feMergeNode in="coloredBlur"/><feMergeNode in="SourceGraphic"/></feMerge>
+        </filter>
+        <filter id="glow2">
+          <feGaussianBlur stdDeviation="6" result="coloredBlur"/>
+          <feMerge><feMergeNode in="coloredBlur"/><feMergeNode in="SourceGraphic"/></feMerge>
+        </filter>
+      </defs>
+
+      <!-- background circle -->
+      <circle cx="100" cy="100" r="98" fill="url(#bgGrad)"/>
+
+      <!-- OUTER RING group (spins) -->
+      <g class="ring-outer">
+        <!-- thick outer ring -->
+        <circle cx="100" cy="100" r="84" fill="none" stroke="url(#ringGrad)" stroke-width="10" opacity="0.9" filter="url(#glow)"/>
+        <!-- outer ring decorative dashes -->
+        <circle cx="100" cy="100" r="84" fill="none" stroke="#00e5ff" stroke-width="2"
+          stroke-dasharray="8 14" stroke-dashoffset="0" opacity="0.5"/>
+        <!-- tiny accent dots -->
+        <circle cx="100" cy="16"  r="3" fill="#00e5ff" filter="url(#glow)"/>
+        <circle cx="100" cy="184" r="3" fill="#00e5ff" filter="url(#glow)"/>
+        <circle cx="16"  cy="100" r="3" fill="#00b8d9" opacity="0.7"/>
+        <circle cx="184" cy="100" r="3" fill="#00b8d9" opacity="0.7"/>
+      </g>
+
+      <!-- INNER RING group (counter-spins) -->
+      <g class="ring-inner">
+        <circle cx="100" cy="100" r="68" fill="none" stroke="url(#ringGrad2)" stroke-width="7" opacity="0.85" filter="url(#glow)"/>
+        <circle cx="100" cy="100" r="68" fill="none" stroke="#00e5ff" stroke-width="1.5"
+          stroke-dasharray="4 20" opacity="0.4"/>
+      </g>
+
+      <!-- black center disc -->
+      <circle cx="100" cy="100" r="54" fill="#0a0a0a"/>
+      <circle cx="100" cy="100" r="54" fill="none" stroke="#00e5ff" stroke-width="2" opacity="0.6" filter="url(#glow)"/>
+
+      <!-- PIN ICON -->
+      <!-- pin body -->
+      <path d="M100 68 C88 68 78 78 78 90 C78 106 100 128 100 128 C100 128 122 106 122 90 C122 78 112 68 100 68Z"
+            fill="#e8eaf0" filter="url(#glow2)"/>
+      <!-- pin inner circle -->
+      <circle cx="100" cy="90" r="9" fill="#0a0a0a"/>
+    </svg>
+  </div>
+
+  <!-- Brand name -->
+  <div class="logo-brand">GHSERVICES</div>
+  <div class="logo-sub">GPS Tracking Solutions</div>
+
+  <div class="hero-line"></div>
+
+  <h1 class="hero-product">ECO5<span>TRACKER</span></h1>
+  <p class="hero-model">Ruptela · Advanced GPS Device</p>
+
+  <p class="hero-tagline">El equipo más completo del mercado. Imposible de sabotear. Imposible de jamear. Siempre conectado.</p>
+
+  <div class="hero-badges">
+    <div class="badge">4G + 2G LTE</div>
+    <div class="badge">Anti-Jammer</div>
+    <div class="badge red">Anti-Sabotaje</div>
+    <div class="badge">Doble Servidor</div>
+    <div class="badge">BLE 5.0</div>
+  </div>
+
+</div>
+
+<!-- VENTAJAS EXCLUSIVAS -->
+<div class="advantages">
+  <div class="advantages-inner">
+    <div class="section-label">Por qué elegirnos</div>
+    <h2 class="section-title">Ventajas Exclusivas</h2>
+    <div class="divider"></div>
+    <div class="adv-grid">
+
+      <div class="adv-card red">
+        <span class="adv-icon">🛡️</span>
+        <div class="adv-title">Conexión <span class="highlight">Imposible de Sabotear</span></div>
+        <div class="adv-desc">Arquitectura de conexión rediseñada que elimina los puntos de vulnerabilidad tradicionales. Los ladrones ya no pueden desactivarlo.</div>
+      </div>
+
+      <div class="adv-card red">
+        <span class="adv-icon">📡</span>
+        <div class="adv-title"><span class="highlight">Anti-Jammer</span> Integrado</div>
+        <div class="adv-desc">Detecta y reporta intentos de bloqueo de señal en tiempo real. Deja atrás a los ladrones con tecnología que ellos no pueden contrarrestar.</div>
+      </div>
+
+      <div class="adv-card gold">
+        <span class="adv-icon">🔗</span>
+        <div class="adv-title">Doble <span class="highlight">Servidor Simultáneo</span></div>
+        <div class="adv-desc">Conecta a dos plataformas al mismo tiempo. Redundancia total, cero puntos ciegos. Tu flota siempre visible desde donde quieras.</div>
+      </div>
+
+      <div class="adv-card">
+        <span class="adv-icon">🌐</span>
+        <div class="adv-title">Cobertura <span class="highlight">4G + 2G</span></div>
+        <div class="adv-desc">LTE Cat 1, LTE-M y fallback a GSM 2G. Si hay señal en el lugar, tu rastreador la encuentra. Sin puntos ciegos.</div>
+      </div>
+
+      <div class="adv-card">
+        <span class="adv-icon">🎯</span>
+        <div class="adv-title"><span class="highlight">Precisión GNSS</span> Extrema</div>
+        <div class="adv-desc">Módulo U-blox M10 con soporte GPS, GLONASS y Galileo. Sensibilidad de –167 a –168 dBm. Localiza incluso en zonas difíciles.</div>
+      </div>
+
+      <div class="adv-card">
+        <span class="adv-icon">🔒</span>
+        <div class="adv-title">Cifrado <span class="highlight">TLS v1.2</span></div>
+        <div class="adv-desc">Transmisión de datos protegida con cifrado industrial. Detección de desconexión y de interferencias incluidas de serie.</div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<!-- SENSORES -->
+<section>
+  <div class="section-label">Accesorios Compatibles</div>
+  <h2 class="section-title">Sensores Principales</h2>
+  <div class="divider"></div>
+  <div class="sensors-grid">
+    <div class="sensor-card">
+      <div class="sensor-icon">🌡️</div>
+      <div class="sensor-name">Temperatura</div>
+      <div class="sensor-desc">Monitoreo en tiempo real vía BLE 5.0. Ideal para transporte de alimentos y carga sensible.</div>
+    </div>
+    <div class="sensor-card">
+      <div class="sensor-icon">🚪</div>
+      <div class="sensor-name">Apertura de Puertas</div>
+      <div class="sensor-desc">Alerta inmediata ante accesos no autorizados. Control total de carga y cabina.</div>
+    </div>
+    <div class="sensor-card">
+      <div class="sensor-icon">🚨</div>
+      <div class="sensor-name">Botón de Pánico</div>
+      <div class="sensor-desc">Botón SOS de respuesta inmediata. El conductor activa la alerta con un solo toque.</div>
+    </div>
+    <div class="sensor-card">
+      <div class="sensor-icon">⚡</div>
+      <div class="sensor-name">Sensores BLE</div>
+      <div class="sensor-desc">Integración inalámbrica con balizas y accesorios de monitoreo ambiental y activos.</div>
+    </div>
+  </div>
+</section>
+
+<!-- FUNCIONALIDADES -->
+<div class="specs-bg">
+  <div class="specs-inner">
+    <div class="section-label">Lo que hace</div>
+    <h2 class="section-title">Funcionalidades</h2>
+    <div class="divider"></div>
+    <div class="features-grid">
+      <div class="feat-item">
+        <div class="feat-dot"></div>
+        <div>
+          <div class="feat-text">Rastreo en tiempo real</div>
+          <div class="feat-sub">Señales GNSS de alta precisión continua</div>
+        </div>
+      </div>
+      <div class="feat-item">
+        <div class="feat-dot"></div>
+        <div>
+          <div class="feat-text">Alertas inteligentes</div>
+          <div class="feat-sub">Detección de eventos críticos al instante</div>
+        </div>
+      </div>
+      <div class="feat-item">
+        <div class="feat-dot"></div>
+        <div>
+          <div class="feat-text">Monitoreo de conductor</div>
+          <div class="feat-sub">Comportamiento, velocidad y consumo</div>
+        </div>
+      </div>
+      <div class="feat-item">
+        <div class="feat-dot"></div>
+        <div>
+          <div class="feat-text">Recuperación de vehículos</div>
+          <div class="feat-sub">Seguimiento preciso ante robo</div>
+        </div>
+      </div>
+      <div class="feat-item">
+        <div class="feat-dot"></div>
+        <div>
+          <div class="feat-text">Gestión de flotas</div>
+          <div class="feat-sub">Rutas, tiempos y rendimiento operativo</div>
+        </div>
+      </div>
+      <div class="feat-item">
+        <div class="feat-dot"></div>
+        <div>
+          <div class="feat-text">Conectividad BLE 5.0</div>
+          <div class="feat-sub">Sensores inalámbricos, balizas y más</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ESPECIFICACIONES TÉCNICAS -->
+<section>
+  <div class="section-label">Hoja Técnica</div>
+  <h2 class="section-title">Especificaciones</h2>
+  <div class="divider"></div>
+
+  <span class="specs-group">⚡ Alimentación</span>
+  <table class="specs-table">
+    <tr><td>Rango de alimentación</td><td>9 – 32 V DC</td></tr>
+    <tr><td>Batería de respaldo</td><td>LiPo 3.7 V / 180 mAh</td></tr>
+    <tr><td>Consumo en reposo</td><td>&lt; 0.5 mA a 12 V DC</td></tr>
+    <tr><td>Protecciones</td><td>Cortocircuito y polaridad inversa</td></tr>
+  </table>
+
+  <span class="specs-group">🛰️ GNSS</span>
+  <table class="specs-table">
+    <tr><td>Constelaciones</td><td>GPS, GLONASS, Galileo</td></tr>
+    <tr><td>Módulo</td><td>U-blox M10</td></tr>
+    <tr><td>Sensibilidad de rastreo</td><td>–167 a –168 dBm</td></tr>
+  </table>
+
+  <span class="specs-group">📶 Conectividad</span>
+  <table class="specs-table">
+    <tr><td>Celular</td><td>LTE Cat 1 · LTE-M · GSM 2G (fallback)</td></tr>
+    <tr><td>Inalámbrico</td><td>BLE 5.0 (sensores y balizas)</td></tr>
+  </table>
+
+  <span class="specs-group">🔌 Interfaces I/O</span>
+  <table class="specs-table">
+    <tr><td>Entradas digitales</td><td>1 DIN (+ AIN/DIN configurable)</td></tr>
+    <tr><td>Salidas digitales</td><td>1 DOUT</td></tr>
+    <tr><td>1-Wire</td><td>Soporte para sensores de temperatura Dallas</td></tr>
+  </table>
+
+  <span class="specs-group">📦 Físicas</span>
+  <table class="specs-table">
+    <tr><td>Dimensiones</td><td>95 mm × 51 mm × 14 mm</td></tr>
+    <tr><td>Peso</td><td>57 g ±2 g (con arnés)</td></tr>
+    <tr><td>Material</td><td>Plástico de policarbonato</td></tr>
+    <tr><td>Temperatura de operación</td><td>–40°C a +85°C</td></tr>
+  </table>
+</section>
+
+<!-- CASOS DE USO -->
+<div class="specs-bg">
+  <div class="specs-inner">
+    <div class="section-label">Aplicaciones</div>
+    <h2 class="section-title">Casos de Uso</h2>
+    <div class="divider"></div>
+    <div class="use-cases">
+      <div class="use-card">
+        <div class="use-title">🚛 Transporte Urbano</div>
+        <div class="use-desc">Control de rutas, tiempos de entrega y rendimiento del conductor en tiempo real.</div>
+      </div>
+      <div class="use-card">
+        <div class="use-title">📦 Carga Ligera</div>
+        <div class="use-desc">Protección contra robo, monitoreo de apertura de unidades y seguimiento de entregas.</div>
+      </div>
+      <div class="use-card">
+        <div class="use-title">🚖 Taxis y Ejecutivo</div>
+        <div class="use-desc">Optimización de recorridos, seguridad del conductor y mejora de la experiencia del cliente.</div>
+      </div>
+      <div class="use-card">
+        <div class="use-title">❄️ Carga Refrigerada</div>
+        <div class="use-desc">Control de temperatura durante el trayecto con sensores BLE integrados.</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<div class="footer">
+  <!-- mini logo footer -->
+  <svg class="footer-logo" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+    <circle cx="100" cy="100" r="84" fill="none" stroke="#00e5ff" stroke-width="8" opacity="0.7"/>
+    <circle cx="100" cy="100" r="68" fill="none" stroke="#00b8d9" stroke-width="5" opacity="0.5"/>
+    <circle cx="100" cy="100" r="52" fill="#0a0a0a"/>
+    <circle cx="100" cy="100" r="52" fill="none" stroke="#00e5ff" stroke-width="2" opacity="0.5"/>
+    <path d="M100 72 C89 72 80 81 80 92 C80 107 100 124 100 124 C100 124 120 107 120 92 C120 81 111 72 100 72Z" fill="#e8eaf0"/>
+    <circle cx="100" cy="92" r="8" fill="#0a0a0a"/>
+  </svg>
+  <div class="footer-brand">GH<span>SERVICES</span></div>
+  <div class="footer-sub">GPS Tracking Solutions</div>
+  <div style="width:40px;height:2px;background:var(--accent);margin:0 auto 24px;box-shadow:0 0 8px var(--accent);"></div>
+  <p style="font-size:14px;color:var(--muted);max-width:400px;margin:0 auto;">
+    Protege lo que más vale. Con el equipo más avanzado disponible en el mercado.
+  </p>
+  <div class="footer-note">ECO5 · Ruptela · Ficha Técnica © GH Services</div>
+</div>
+
+</body>
+</html>
